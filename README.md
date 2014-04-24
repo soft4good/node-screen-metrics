@@ -21,7 +21,7 @@ node-gyp configure
 node-gyp build
 </code>
 
-<h2>Building for node-webkit (0.9.2)</h2>
+<h3>Building for node-webkit (0.9.2)</h3>
 
 <code>
 nw-gyp configure --target=0.9.2
