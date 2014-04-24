@@ -1,7 +1,7 @@
 node-screen-metrics
 ===================
 
-Node.js native c++ module (windows) for retrieving screen geometry information (work in progress).
+Node.js native c++ module for retrieving screen geometry information (work in progress).
 
 <h2>Supported Platforms</h2>
 
