@@ -42,3 +42,15 @@ nw-gyp build
 <pre>
   node test.js
 </pre>
+
+<h2>Usage</h2>
+
+<pre>
+  var screenMetrics = require( 'screen_metrics' );
+  
+  var monitorsCount   = screenMetrics.getMonitorsCount();
+  var totalResolution = screenMetrics.getTotalResolution();
+  var screenGeometry  = screenMetrics.getDisplayMetrics();
+</pre>
+
+Have fun!
