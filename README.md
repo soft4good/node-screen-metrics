@@ -33,6 +33,6 @@ nw-gyp build
 
 <h2>Testing</h2>
 
-<code>
+<pre>
   node test.js
-</code>
+</pre>
