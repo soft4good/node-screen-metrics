@@ -3,7 +3,7 @@ node-screen-metrics
 
 Node.js native c++ module (windows) for retrieving screen geometry information (work in progress).
 
-<h1>Exported Methods</h1>
+<h2>Exported Methods</h2>
 
 <b>getMonitorsCount()</b> 
 Returns the number of display monitors in the system.
@@ -17,21 +17,21 @@ Returns an array in the form [w,h] with the total width and height (pixels) of t
 Returns an array of arrays in the form [[x,y,w,h],[x,y,w,h],[x,y,w,h]...] with the resolutions and virtual positions of each display monitor in the system.
 
 
-<h1>Building</h1>
+<h2>Building</h2>
 
-<code>
+<pre>
 node-gyp configure
 node-gyp build
-</code>
+</pre>
 
-<h3>Building for node-webkit (0.9.2)</h3>
+<h4>Building for node-webkit (0.9.2)</h4>
 
-<code>
+<pre>
 nw-gyp configure --target=0.9.2
 nw-gyp build
-</code>
+</pre>
 
-<h1>Testing</h1>
+<h2>Testing</h2>
 
 <code>
   node test.js
