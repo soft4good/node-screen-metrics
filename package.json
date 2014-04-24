@@ -1,0 +1,5 @@
+{
+    "name": "screen_metrics",
+    "version": "1.0.0",
+    "main": "./build/Release/screen_metrics"
+}
