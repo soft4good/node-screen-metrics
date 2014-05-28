@@ -7,6 +7,7 @@ Node.js native c++ module for retrieving screen geometry information (work in pr
 
 <ul>
   <li>Windows (tested on 7 x86 & x64)</li>
+  <li>OSX (tested on Mavericks 10.9)</li>
 </ul>
 
 <h2>Exported Methods</h2>
