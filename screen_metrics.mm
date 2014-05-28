@@ -1,33 +1,33 @@
 #include <node.h>
 #include <node_version.h>
-#include "Windows.h"
+#import <AppKit/AppKit.h>
 
 using namespace v8;
 
 // TODO: Handle Exceptions!
 
-BOOL CALLBACK MonitorEnumProc( HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData )
-{
-    Handle<Array> * monitors = (Handle<Array>*)dwData;
-    RECT * monitorCoordinates = (RECT*)lprcMonitor;
-
-    Handle<Array> monitorData = Array::New();
-
-    monitorData->Set( 0, Integer::New( (*monitorCoordinates).left ) );
-    monitorData->Set( 1, Integer::New( (*monitorCoordinates).top ) );
-    monitorData->Set( 2, Integer::New( (*monitorCoordinates).right - (*monitorCoordinates).left ) );
-    monitorData->Set( 3, Integer::New( (*monitorCoordinates).bottom - (*monitorCoordinates).top  ) );
-
-    (*monitors)->Set( (*monitors)->Length(), monitorData );
-
-    return TRUE;
-}
-
 Handle<Array> displayMetrics()
 {
   Handle<Array> monitors = Array::New();
 
-  EnumDisplayMonitors( NULL, NULL, MonitorEnumProc, ( LPARAM ) &monitors );
+  NSArray *systemScreens = [NSScreen screens];
+  
+  if ( systemScreens != NULL )
+  {
+    for( NSScreen *screen in systemScreens )
+    {
+      NSRect screenFrame = screen.frame;
+      
+      Handle<Array> displayMetrics = Array::New( 4 );
+      
+      displayMetrics->Set( 0, Integer::New( screenFrame.origin.x ) );
+      displayMetrics->Set( 1, Integer::New( screenFrame.origin.y ) );
+      displayMetrics->Set( 2, Integer::New( screenFrame.size.width ) );
+      displayMetrics->Set( 3, Integer::New( screenFrame.size.height ) );
+        
+      monitors->Set( monitors->Length(), displayMetrics );
+    }
+  }
 
   return monitors;
 }
@@ -36,15 +36,34 @@ Handle<Array> totalResolution()
 {
   Handle<Array> dimensions = Array::New( 2 );
 
-  dimensions->Set( 0, Integer::New( GetSystemMetrics( SM_CXVIRTUALSCREEN ) ) );
-  dimensions->Set( 1, Integer::New( GetSystemMetrics( SM_CYVIRTUALSCREEN ) ) );
-
+  unsigned totalWidth = 0;
+  unsigned totalHeight = 0;
+  
+  NSArray *systemScreens = [NSScreen screens];
+  
+  if ( systemScreens != NULL )
+  {
+    for( NSScreen *screen in systemScreens )
+    {
+      NSRect screenFrame = screen.frame;
+    
+      totalWidth  += screenFrame.size.width;
+      totalHeight += screenFrame.size.height;
+    }
+   
+    dimensions->Set( 0, Integer::New( totalWidth ) ); // width
+    dimensions->Set( 1, Integer::New( totalHeight ) ); // height
+  }
+  
   return dimensions;
 }
 
 Handle<Integer> monitorsCount()
 {
-	return Integer::New( GetSystemMetrics( SM_CMONITORS ) );
+  NSArray *systemScreens = [NSScreen screens];
+  unsigned screenCount 	 = [systemScreens count];
+    
+  return Integer::New( screenCount );
 }
 
 #if NODE_VERSION_AT_LEAST(0, 11, 3)
